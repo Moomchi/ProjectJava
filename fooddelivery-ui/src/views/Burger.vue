@@ -1,7 +1,7 @@
 <template>
   <div>
   <header class="jumbotron">
-    <h3>{{message}}</h3>
+    <h3>Total elements: {{this.rows}}</h3>
     <button v-on:click="getProductsPage">Търси</button>
     <b-table
     id="burgerTable"
@@ -12,6 +12,15 @@
     :current-page="currentPage"
     :per-page="0"
     >
+      <template slot="top-row" slot-scope="{ fields }">
+        <td v-for="(field, index) in fields" :key="field.id">
+          <div v-if="index === fields.length-1">
+          </div>
+          <div v-else>
+            <input v-model="name" :placeholder="field.label">
+          </div>
+        </td>
+      </template>
     </b-table>
 
     <b-pagination
@@ -36,23 +45,14 @@ export default {
       message: '',
       content: '',
       name: '',
-      burgers: [
-        {
-          name: '',
-          price: ''
-        }],
+      burgers: '',
       fields: [
-        { key: 'name', label: 'Име' },
+        { key: 'burgerName', label: 'Име' },
         { key: 'price', label: 'Цена' }
       ],
       currentPage: '',
       perPage: 5,
-      rows: '',
-      filters: [
-        {
-          name: '',
-          price: ''
-        }]
+      rows: ''
     }
   },
   mounted () {
