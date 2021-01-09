@@ -3,6 +3,10 @@ import axios from 'axios'
 const API_URL = 'http://localhost:8080/menu'
 
 class MenuService {
+  getAllDeals () {
+    return axios.get(API_URL + '/all/deals')
+  }
+
   getAll () {
     return axios.get(API_URL + '/all')
   }

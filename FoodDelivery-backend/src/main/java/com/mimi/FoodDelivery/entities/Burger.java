@@ -18,19 +18,14 @@ public class Burger {
     @Column(name = "price")
     private BigDecimal price;
 
-    @ManyToOne()
-    @JoinColumn(name = "sauce_id")
-    private Sauce sauce;
-
     public Burger() {
 
     }
 
-    public Burger(Long id, String burgerName, BigDecimal price, Sauce sauce) {
+    public Burger(Long id, String burgerName, BigDecimal price) {
         this.id = id;
         this.burgerName = burgerName;
         this.price = price;
-        this.sauce = sauce;
     }
 
     public Long getId() {
@@ -56,13 +51,4 @@ public class Burger {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
-    public Sauce getSauce() {
-        return sauce;
-    }
-
-    public void setSauce(Sauce sauce) {
-        this.sauce = sauce;
-    }
-
 }

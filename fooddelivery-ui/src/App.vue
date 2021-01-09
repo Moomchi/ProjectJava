@@ -3,8 +3,13 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/menu">Menu</router-link> |
-      <router-link to="/burger">Burger</router-link>
+      <router-link to="/deals">Deals</router-link> |
+      <router-link to="/burger">Burger</router-link> |
+      <router-link to="/pizza">Pizza</router-link> |
+      <router-link to="/salad">Salad</router-link> |
+      <router-link to="/dessert">Dessert</router-link> |
+      <router-link to="/drink">Drink</router-link> |
+      <router-link to="/sauce">Sauce</router-link>
     </div>
     <router-view/>
   </div>

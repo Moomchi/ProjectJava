@@ -21,7 +21,7 @@ public class MenuController {
 
     private final BurgerRepository burgerRepository;
     private CityRepository cityRepository;
-    private DealsRepository dealsRepository;
+    private final DealsRepository dealsRepository;
     private final DessertRepository dessertRepository;
     private final DrinkRepository drinkRepository;
     private final PizzaRepository pizzaRepository;
@@ -36,7 +36,8 @@ public class MenuController {
                    DrinkRepository drinkRepository,
                    SaladRepository saladRepository,
                    SauceRepository sauceRepository,
-                   OrdersRepository ordersRepository) {
+                   OrdersRepository ordersRepository,
+                   DealsRepository dealsRepository) {
         this.burgerRepository= burgerRepository;
         this.pizzaRepository = pizzaRepository;
         this.dessertRepository = dessertRepository;
@@ -44,17 +45,12 @@ public class MenuController {
         this.saladRepository = saladRepository;
         this.sauceRepository = sauceRepository;
         this.ordersRepository = ordersRepository;
+        this.dealsRepository = dealsRepository;
     }
 
-    @GetMapping("/text")
-    public ResponseEntity<?> Text() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        String currentDate=formatter.format(date);
-
-        Map<String,String> response = new HashMap<>();
-        response.put("date:",currentDate);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    @GetMapping("/all/deals")
+    public List<Deals> getAllDeals() {
+        return new ArrayList<>(dealsRepository.findAll());
     }
 
     @GetMapping("/all")
