@@ -1,42 +1,42 @@
 <template>
   <div>
-  <header class="jumbotron">
-    <h3>Total items: {{this.rows}}</h3>
-    <button v-on:click="getProductsPage">Търси</button>
-    <b-table
-    id="burgerTable"
-    striped
-    hover
-    dark
-    bordered
-    :items="burgers"
-    :fields="fields"
-    :current-page="currentPage"
-    :per-page="0"
-    >
-      <template slot="top-row" slot-scope="{ fields }">
-        <td v-for="(field, index) in fields" :key="field.id">
-          <div v-if="index !== 0">
-          </div>
-          <div v-else>
-            <input v-model="name" :placeholder="field.label">
-          </div>
-        </td>
-      </template>
+    <header class="jumbotron">
+      <h3>Total items: {{this.rows}}</h3>
+      <button v-on:click="getProductsPage">Търси</button>
+      <b-table
+        id="dessertTable"
+        striped
+        hover
+        dark
+        bordered
+        :items="desserts"
+        :fields="fields"
+        :current-page="currentPage"
+        :per-page="0"
+      >
+        <template slot="top-row" slot-scope="{ fields }">
+          <td v-for="(field, index) in fields" :key="field.id">
+            <div v-if="index !== 0">
+            </div>
+            <div v-else>
+              <input v-model="name" :placeholder="field.label">
+            </div>
+          </td>
+        </template>
 
-      <template v-slot:cell(choose)="data">
-        <button v-on:click="(data.item.id)">Избери</button>
-      </template>
+        <template v-slot:cell(choose)="data">
+          <button v-on:click="(data.item.id)">Избери</button>
+        </template>
 
-    </b-table>
+      </b-table>
 
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      @input="getProductsPage"
-      aria-controls="burgerTable"
-    ></b-pagination>
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        @input="getProductsPage"
+        aria-controls="dessertTable"
+      ></b-pagination>
 
     </header>
   </div>
@@ -46,15 +46,15 @@
 import MenuService from '../services/menu-service'
 
 export default {
-  name: 'Burger',
+  name: 'Dessert',
   data () {
     return {
       message: '',
       content: '',
       name: '',
-      burgers: '',
+      desserts: '',
       fields: [
-        { key: 'burgerName', label: 'Име' },
+        { key: 'dessertName', label: 'Име' },
         { key: 'price', label: 'Цена' },
         { key: 'choose', label: '' }
       ],
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     getProductById () {
-      MenuService.getProductById(0, 4).then(
+      MenuService.getProductById(3, 4).then(
         response => {
           console.log()
           this.content = response.data
@@ -82,7 +82,7 @@ export default {
       )
     },
     getProductAll () {
-      MenuService.getProductAll(0).then(
+      MenuService.getProductAll(3).then(
         response => {
           console.log()
           this.content = response.data
@@ -96,9 +96,9 @@ export default {
       )
     },
     getProductsPage () {
-      MenuService.getProductsPage(this.name, this.currentPage, this.perPage, 0).then(
+      MenuService.getProductsPage(this.name, this.currentPage, this.perPage, 3).then(
         response => {
-          this.burgers = response.data.products
+          this.desserts = response.data.products
           this.rows = response.data.totalItems
         },
         error => {
