@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public interface SaladRepository extends JpaRepository<Salad,Long> {
@@ -17,4 +18,7 @@ public interface SaladRepository extends JpaRepository<Salad,Long> {
             "WHERE lower(s.saladName) " +
             "LIKE :#{#name==null || #name.isEmpty()? '%' : '%'+#name+'%'} ")
     Page<Salad> findPageSalad(Pageable pageable, String name);
+
+    @Query("SELECT s.price from Salad s WHERE (s.id) = :id ")
+    BigDecimal findPriceById(Long id);
 }
