@@ -14,8 +14,8 @@ public class Orders {
     @Column(name="date")
     private String date;
 
-    @Column(name="received")
-    private Boolean received;
+    @Column(name="recieved")
+    private Boolean recieved;
 
     @Column(name="order_list")
     private String orderList;
@@ -26,10 +26,10 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(Long id, Boolean received, String orderList, String customerName, String date) {
+    public Orders(Long id, Boolean recieved, String orderList, String customerName, String date) {
         this.id = id;
         this.date = date;
-        this.received = received;
+        this.recieved = recieved;
         this.orderList = orderList;
         this.customerName = customerName;
     }
@@ -59,11 +59,11 @@ public class Orders {
     }
 
     public Boolean getReceived() {
-        return received;
+        return recieved;
     }
 
-    public void setReceived(Boolean received) {
-        this.received = received;
+    public void setReceived(Boolean recieved) {
+        this.recieved = recieved;
     }
 
     public String getOrderList() {

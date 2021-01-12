@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,6 +31,7 @@ public class MenuController {
     private final SauceRepository sauceRepository;
     private DistrictRepository districtRepository;
     private final OrdersRepository ordersRepository;
+    private final ProductListRepository productListRepository;
 
     MenuController(PizzaRepository pizzaRepository,
                    DessertRepository dessertRepository,
@@ -37,7 +40,8 @@ public class MenuController {
                    SaladRepository saladRepository,
                    SauceRepository sauceRepository,
                    OrdersRepository ordersRepository,
-                   DealsRepository dealsRepository) {
+                   DealsRepository dealsRepository,
+                   ProductListRepository productListRepository) {
         this.burgerRepository= burgerRepository;
         this.pizzaRepository = pizzaRepository;
         this.dessertRepository = dessertRepository;
@@ -46,6 +50,7 @@ public class MenuController {
         this.sauceRepository = sauceRepository;
         this.ordersRepository = ordersRepository;
         this.dealsRepository = dealsRepository;
+        this.productListRepository = productListRepository;
     }
 
     @GetMapping("/all/deals")
@@ -142,14 +147,21 @@ public class MenuController {
     @PostMapping("/orders/save")
     public ResponseEntity<?> saveOrder(@RequestParam(required = false) Long id,
                                        @RequestParam(required = false) String customerName,
-                                       @RequestParam(required = false) String orderList) {
+                                       @RequestParam(required = false) Integer customerId) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         String currentDate=formatter.format(date);
 
+        String orderList="";
+
         Boolean received = false;
 
-        Orders currentOrder = new Orders(id,received,orderList,customerName,currentDate);
+        ArrayList<ProductsList> productList = productListRepository.getListByCustomerId(customerId);
+        orderList=productList.toString();
+
+
+
+        Orders currentOrder = new Orders(id,received, orderList,customerName,currentDate);
         currentOrder = ordersRepository.save(currentOrder);
 
         Map<String,Object> response = new HashMap<>();
@@ -158,4 +170,30 @@ public class MenuController {
         return new ResponseEntity<>(response,HttpStatus.OK);
         }
 
+        @PostMapping("/products/save")
+    public ResponseEntity<?> saveProducts(@RequestParam(required = false) Long id,
+                                          @RequestParam Integer customerId,
+                                          @RequestParam Integer num,
+                                          @RequestParam Integer productId,
+                                          @RequestParam Integer quantity){
+
+            BigDecimal price=null;
+            Long longProductId = Long.valueOf(productId);
+            switch (num){
+                case 0: price = burgerRepository.findPriceById(longProductId);break;
+                case 1: price = pizzaRepository.findPriceById(longProductId);break;
+                case 2: price = saladRepository.findPriceById(longProductId);break;
+                case 3: price = dessertRepository.findPriceById(longProductId);break;
+                case 4: price = drinkRepository.findPriceById(longProductId);break;
+                case 5: price = sauceRepository.findPriceById(longProductId);break;
+            }
+            price = BigDecimal.valueOf(quantity).multiply(price);
+            ProductsList productsList = new ProductsList(id,num,productId,quantity,customerId,price);
+            productsList = productListRepository.save(productsList);
+
+            Map<String,Object> response = new HashMap<>();
+            response.put("ProductList", productsList);
+            response.put("messаge","Успешно записан");
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        }
 }
