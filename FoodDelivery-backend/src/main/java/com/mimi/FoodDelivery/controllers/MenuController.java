@@ -180,6 +180,7 @@ public class MenuController {
 
         Orders currentOrder = new Orders(id,received, orderList.toString(),customerName,currentDate,totalPrice);
         currentOrder = ordersRepository.save(currentOrder);
+        productListRepository.deleteProductList(customerId);
 
         Map<String,Object> response = new HashMap<>();
         response.put("Order", currentOrder);

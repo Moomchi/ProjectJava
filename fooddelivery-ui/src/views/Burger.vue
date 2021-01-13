@@ -24,8 +24,8 @@
         </td>
       </template>
 
-      <template v-slot:cell(choose)="data">
-        <button v-on:click="(data.item.id)">Избери</button>
+      <template v-slot:cell(choose)>
+        <button v-on:click="saveProduct">Избери</button>
       </template>
 
     </b-table>
@@ -106,6 +106,19 @@ export default {
             (error.response && error.response.data) ||
             error.message ||
             error.toString()
+        }
+      )
+    },
+    saveProduct () {
+      MenuService.saveProduct(5, 0, 7, 2).then(
+        response => {
+          console.log(response.data)
+        },
+        error => {
+          this.content =
+            (error.response && error.response.data) ||
+          error.message ||
+          error.toString()
         }
       )
     }
