@@ -22,4 +22,7 @@ public interface PizzaRepository extends JpaRepository<Pizza,Long> {
 
     @Query("SELECT p.price from Pizza p WHERE (p.id) = :id ")
     BigDecimal findPriceById(Long id);
+
+    @Query("SELECT p.pizzaName from Pizza p WHERE (p.id) = :id ")
+    String getPizzaName(Long id);
 }

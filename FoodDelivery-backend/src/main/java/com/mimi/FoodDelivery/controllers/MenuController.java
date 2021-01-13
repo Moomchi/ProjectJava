@@ -152,16 +152,33 @@ public class MenuController {
         Date date = new Date();
         String currentDate=formatter.format(date);
 
-        String orderList="";
+        StringBuilder orderList= new StringBuilder();
+        BigDecimal totalPrice=BigDecimal.ZERO;
 
         Boolean received = false;
 
         ArrayList<ProductsList> productList = productListRepository.getListByCustomerId(customerId);
-        orderList=productList.toString();
 
+        for (ProductsList productsList : productList) {
+            String productName = "";
 
+            Long newProductId = Long.valueOf(productsList.getProductId());
+            Integer num = productsList.getProductTableId();
+            Integer quantity = productsList.getQuantity();
+            totalPrice = totalPrice.add(productsList.getProductsPrice());
 
-        Orders currentOrder = new Orders(id,received, orderList,customerName,currentDate);
+            switch (num) {
+                case 0: productName = burgerRepository.getBurgerName(newProductId); break;
+                case 1: productName = pizzaRepository.getPizzaName(newProductId); break;
+                case 2: productName = saladRepository.getSaladName(newProductId); break;
+                case 3: productName = dessertRepository.getDessertName(newProductId); break;
+                case 4: productName = drinkRepository.getDrinkName(newProductId); break;
+                case 5: productName = sauceRepository.getSauceName(newProductId); break;
+            }
+            orderList.append(" ").append(quantity.toString()).append("x ").append(productName);
+        }
+
+        Orders currentOrder = new Orders(id,received, orderList.toString(),customerName,currentDate,totalPrice);
         currentOrder = ordersRepository.save(currentOrder);
 
         Map<String,Object> response = new HashMap<>();
