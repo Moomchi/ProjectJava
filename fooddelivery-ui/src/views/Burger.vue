@@ -2,8 +2,36 @@
   <div>
   <header class="jumbotron">
     <h3>Total items: {{this.rows}}</h3>
-    <button v-on:click="getProductsPage">Търси</button>
-    <b-table
+    <template>
+      <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
+        <div class="card-header">Your cart</div>
+        <div class="card-body">
+          <p class="card-text"
+               v-for="burger in burgers" :key="burger.id">
+            • {{burger.burgerName}} - {{burger.price}}лв.
+          </p>
+        </div>
+      </div>
+    </template>
+    <template>
+      <v-container grid-list>
+      <td v-for="burger in burgers" :key="burger.id">
+      <div class="card text-white bg-dark col-lg-4" style="max-width: 15rem;">
+        <div class="card-header">{{burger.burgerName}}</div>
+        <div class="card-body">
+          <p class="card-text">
+            {{burger.price}} лв.
+          </p>
+          <div slot="chosen">
+            <button v-on:click="saveProduct">Add</button>
+          </div>
+        </div>
+      </div>
+      </td>
+      </v-container>
+    </template>
+
+   <!-- <b-table
     id="burgerTable"
     striped
     hover
@@ -24,11 +52,12 @@
         </td>
       </template>
 
-      <template v-slot:cell(choose)="data">
-        <button v-on:click="(data.item.id)">Избери</button>
+      <template v-slot:cell(choose)>
+        <button v-on:click="saveProduct">Избери</button>
       </template>
 
     </b-table>
+    -->
 
     <b-pagination
       v-model="currentPage"
@@ -37,8 +66,9 @@
       @input="getProductsPage"
       aria-controls="burgerTable"
     ></b-pagination>
+    <button v-on:click="getProductsPage">Търси</button>
 
-    </header>
+  </header>
   </div>
 </template>
 
@@ -53,6 +83,7 @@ export default {
       content: '',
       name: '',
       burgers: '',
+      added: '',
       fields: [
         { key: 'burgerName', label: 'Име' },
         { key: 'price', label: 'Цена' },
@@ -106,6 +137,19 @@ export default {
             (error.response && error.response.data) ||
             error.message ||
             error.toString()
+        }
+      )
+    },
+    saveProduct () {
+      MenuService.saveProduct(5, 0, 7, 2).then(
+        response => {
+          this.added = response.data.productList
+        },
+        error => {
+          this.content =
+            (error.response && error.response.data) ||
+          error.message ||
+          error.toString()
         }
       )
     }

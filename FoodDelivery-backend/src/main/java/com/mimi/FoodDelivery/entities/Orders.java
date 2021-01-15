@@ -1,6 +1,7 @@
 package com.mimi.FoodDelivery.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 @Entity
@@ -14,8 +15,8 @@ public class Orders {
     @Column(name="date")
     private String date;
 
-    @Column(name="recieved")
-    private Boolean recieved;
+    @Column(name="received")
+    private Boolean received;
 
     @Column(name="order_list")
     private String orderList;
@@ -23,16 +24,24 @@ public class Orders {
     @Column(name="customer_name")
     private String customerName;
 
+    @Column(name="total_price")
+    private BigDecimal totalPrice;
+
     public Orders() {
     }
 
-    public Orders(Long id, Boolean recieved, String orderList, String customerName, String date) {
+    public Orders(Long id, Boolean received, String orderList, String customerName, String date,BigDecimal totalPrice) {
         this.id = id;
         this.date = date;
-        this.recieved = recieved;
+        this.received = received;
         this.orderList = orderList;
         this.customerName = customerName;
+        this.totalPrice = totalPrice;
     }
+
+    public BigDecimal getTotalPrice() { return totalPrice; }
+
+    public void setTotalPrice(BigDecimal totalPrice) { this.totalPrice = totalPrice; }
 
     public Long getId() {
         return id;
@@ -59,11 +68,11 @@ public class Orders {
     }
 
     public Boolean getReceived() {
-        return recieved;
+        return received;
     }
 
-    public void setReceived(Boolean recieved) {
-        this.recieved = recieved;
+    public void setReceived(Boolean received) {
+        this.received = received;
     }
 
     public String getOrderList() {

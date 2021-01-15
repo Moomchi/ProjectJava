@@ -21,4 +21,7 @@ public interface BurgerRepository extends JpaRepository<Burger,Long> {
 
     @Query("SELECT b.price from Burger b WHERE (b.id) = :id ")
     BigDecimal findPriceById(Long id);
+
+    @Query("SELECT b.burgerName from Burger b WHERE (b.id) = :id ")
+    String getBurgerName(Long id);
 }

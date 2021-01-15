@@ -45,6 +45,19 @@ class MenuService {
           }
       })
   }
+
+  saveProduct (customerId, num, productId, quantity) {
+    return axios.post(API_URL + '/products/save',
+      {
+        params:
+          {
+            customerId: customerId,
+            num: num,
+            productId: productId,
+            quantity: quantity
+          }
+      })
+  }
 }
 
 export default new MenuService()

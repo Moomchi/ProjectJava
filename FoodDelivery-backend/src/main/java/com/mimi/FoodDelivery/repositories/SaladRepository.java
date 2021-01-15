@@ -21,4 +21,7 @@ public interface SaladRepository extends JpaRepository<Salad,Long> {
 
     @Query("SELECT s.price from Salad s WHERE (s.id) = :id ")
     BigDecimal findPriceById(Long id);
+
+    @Query("SELECT s.saladName from Salad s WHERE (s.id) = :id ")
+    String getSaladName(Long id);
 }

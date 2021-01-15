@@ -22,4 +22,7 @@ public interface DrinkRepository extends JpaRepository<Drink,Long> {
 
     @Query("SELECT dr.price from Drink dr WHERE (dr.id) = :id ")
     BigDecimal findPriceById(Long id);
+
+    @Query("SELECT dr.drinkName from Drink dr WHERE (dr.id) = :id ")
+    String getDrinkName(Long id);
 }

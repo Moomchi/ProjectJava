@@ -22,4 +22,7 @@ public interface SauceRepository extends JpaRepository<Sauce,Long> {
 
     @Query("SELECT s.price from Sauce s WHERE (s.id) = :id ")
     BigDecimal findPriceById(Long id);
+
+    @Query("SELECT s.sauceName from Sauce s WHERE (s.id) = :id ")
+    String getSauceName(Long id);
 }

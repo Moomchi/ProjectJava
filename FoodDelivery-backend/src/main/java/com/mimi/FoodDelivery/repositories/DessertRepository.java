@@ -22,4 +22,7 @@ public interface DessertRepository extends JpaRepository<Dessert,Long> {
 
     @Query("SELECT d.price from Dessert d WHERE (d.id) = :id ")
     BigDecimal findPriceById(Long id);
+
+    @Query("SELECT d.dessertName from Dessert d WHERE (d.id) = :id ")
+    String getDessertName(Long id);
 }
