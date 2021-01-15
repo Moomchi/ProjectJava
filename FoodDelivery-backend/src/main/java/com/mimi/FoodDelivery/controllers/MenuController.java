@@ -178,6 +178,7 @@ public class MenuController {
             orderList.append(" ").append(quantity.toString()).append("x ").append(productName);
         }
 
+
         Orders currentOrder = new Orders(id,received, orderList.toString(),customerName,currentDate,totalPrice);
         currentOrder = ordersRepository.save(currentOrder);
         productListRepository.deleteProductList(customerId);
