@@ -1,6 +1,7 @@
 package com.mimi.FoodDelivery.controllers;
 
 
+import com.mimi.FoodDelivery.beans.ProductRequest;
 import com.mimi.FoodDelivery.entities.*;
 import com.mimi.FoodDelivery.repositories.*;
 import org.springframework.data.domain.Page;
@@ -190,15 +191,11 @@ public class MenuController {
         }
 
         @PostMapping("/products/save")
-    public ResponseEntity<?> saveProducts(@RequestParam(required = false) Long id,
-                                          @RequestParam Integer customerId,
-                                          @RequestParam Integer num,
-                                          @RequestParam Integer productId,
-                                          @RequestParam Integer quantity){
+        public ResponseEntity<?> saveProducts(@RequestBody ProductRequest productRequest){
 
             BigDecimal price=null;
-            Long longProductId = Long.valueOf(productId);
-            switch (num){
+            Long longProductId = Long.valueOf(productRequest.getProductId());
+            switch (productRequest.getNum()){
                 case 0: price = burgerRepository.findPriceById(longProductId);break;
                 case 1: price = pizzaRepository.findPriceById(longProductId);break;
                 case 2: price = saladRepository.findPriceById(longProductId);break;
@@ -206,8 +203,14 @@ public class MenuController {
                 case 4: price = drinkRepository.findPriceById(longProductId);break;
                 case 5: price = sauceRepository.findPriceById(longProductId);break;
             }
-            price = BigDecimal.valueOf(quantity).multiply(price);
-            ProductsList productsList = new ProductsList(id,num,productId,quantity,customerId,price);
+            price = BigDecimal.valueOf(productRequest.getQuantity()).multiply(price);
+            ProductsList productsList = new ProductsList(
+                    productRequest.getId(),
+                    productRequest.getNum(),
+                    productRequest.getProductId(),
+                    productRequest.getQuantity(),
+                    productRequest.getCustomerId(),
+                    price);
             productsList = productListRepository.save(productsList);
 
             Map<String,Object> response = new HashMap<>();
