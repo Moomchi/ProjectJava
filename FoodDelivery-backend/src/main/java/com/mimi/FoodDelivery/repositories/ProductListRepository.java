@@ -24,4 +24,9 @@ public interface ProductListRepository extends JpaRepository<ProductsList,Long> 
     @Modifying
     @Query("DELETE FROM ProductsList p WHERE (p.customerId) = :customerId ")
     void deleteProductList(Integer customerId);
+
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM ProductsList p WHERE (p.id) = :id ")
+    void deleteProductListById(Long id);
 }

@@ -2,7 +2,6 @@
     <div>
       <header class="jumbotron">
         <h3>Вашата количка</h3>
-        <button v-on:click="getCartPage">Търси</button>
         <b-table
           id="productList"
           striped
@@ -14,22 +13,11 @@
           :current-page="currentPage"
           :per-page="0"
         >
-          <template slot="top-row" slot-scope="{ fields }">
-            <td v-for="(field, index) in fields" :key="field.id">
-              <div v-if="index !== 0">
-              </div>
-              <div v-else>
-                <input v-model="customerId" :placeholder="field.label">
-              </div>
-            </td>
+          <template v-slot:cell(choose)="{ item }">
+            <b-button variant="secondary" v-on:click="deleteProductFromCart(item.id)" type="button">Изтрий</b-button>
           </template>
-
-          <template v-slot:cell(choose)="data">
-            <button v-on:click="(data.item.id)">Избери</button>
-          </template>
-
         </b-table>
-
+        <b-button variant="secondary" v-on:click="deleteProductFromCart(item.id)">Запази</b-button>
         <b-pagination
           v-model="currentPage"
           :total-rows="rows"
@@ -51,6 +39,7 @@ export default {
       message: '',
       content: '',
       name: '',
+      id: '',
       customerId: 5,
       products: '',
       fields: [
@@ -100,6 +89,19 @@ export default {
         response => {
           console.log()
           this.name = response.data
+        },
+        error => {
+          this.content =
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString()
+        }
+      )
+    },
+    deleteProductFromCart (id) {
+      MenuService.deleteProductFromCart(id).then(
+        response => {
+          console.log('Работи бе майкати ти да еба')
         },
         error => {
           this.content =

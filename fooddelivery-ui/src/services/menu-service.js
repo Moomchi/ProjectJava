@@ -49,7 +49,7 @@ class MenuService {
   saveProduct (form) {
     return axios.post(API_URL + '/products/save',
       {
-        id: '',
+        id: form.id,
         customerId: form.customerId,
         num: form.num,
         productId: form.productId,
@@ -61,9 +61,9 @@ class MenuService {
     return axios.get(API_URL + '/cart',
       {
         params:
-        {
-          customerId: customerId
-        }
+          {
+            customerId: customerId
+          }
       })
   }
 
@@ -75,6 +75,16 @@ class MenuService {
             customerId: customerId,
             currentPage: currentPage,
             perPage: perPage
+          }
+      })
+  }
+
+  deleteProductFromCart (num) {
+    return axios.get(API_URL + '/cart/delete',
+      {
+        params:
+          {
+            num: num
           }
       })
   }

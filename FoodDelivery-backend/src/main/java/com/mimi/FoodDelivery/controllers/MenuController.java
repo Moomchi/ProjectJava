@@ -250,4 +250,10 @@ public class MenuController {
             response.put("messаge","Успешно записан");
             return new ResponseEntity<>(response,HttpStatus.OK);
         }
+
+        @GetMapping("/cart/delete")
+        public ResponseEntity<?> deleteProductFromCart(@RequestParam Long num){
+            productListRepository.deleteProductListById(num);
+            return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
