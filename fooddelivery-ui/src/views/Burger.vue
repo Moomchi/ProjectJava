@@ -2,27 +2,6 @@
   <div>
     <header class="jumbotron">
       <h3>Total items: {{this.rows}}</h3>
-      <template>
-        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
-      </template>
-      <template>
-        <v-container class="grid-list-xl">
-          <td v-for="burger in burgers" :key="burger.id">
-            <div class="card text-white bg-dark col-lg-4" style="max-width: 15rem;">
-              <div class="card-header">{{burger.burgerName}}</div>
-              <div class="card-body">
-                <p class="card-text">
-                  {{burger.price}} лв.
-                </p>
-                <input v-model="quantities" placeholder="Попълни ме" type="number">
-                <div slot="chosen">
-                  <button v-on:click="saveProduct(quantities,burger.id)">Добави</button>
-                </div>
-              </div>
-            </div>
-          </td>
-        </v-container>
-      </template>
       <b-table
        id="burgerTable"
        striped
@@ -34,20 +13,45 @@
        :current-page="currentPage"
        :per-page="0"
        >
+        <!--
+         <template>
+        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
+      </template>
+
+        <template>
+          <v-container class="grid-list-xl">
+            <td v-for="(burger,index) in burgers" :key="burger.id">
+              <div class="card text-white bg-dark col-lg-4" style="max-width: 15rem;">
+                <div class="card-header">{{burger.burgerName}}</div>
+                <div class="card-body">
+                  <p class="card-text">
+                    {{burger.price}} лв.
+                  </p>
+                  <input v-model="quantities[index]" placeholder="Попълни ме" type="number">
+                  <div slot="chosen">
+                    <button v-on:click="saveProduct(quantities[index],burger.id)">Добави</button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </v-container>
+        </template>
+        -->
          <template slot="top-row" slot-scope="{ fields }">
            <td v-for="(field, index) in fields" :key="field.id">
              <div v-if="index !== 0">
              </div>
              <div v-else>
                <input v-model="name" :placeholder="field.label">
+               <input v-model="quantities[index]" placeholder="Попълни ме" type="number">
              </div>
            </td>
          </template>
 
          <template v-slot:cell(choose)>
-           <button v-on:click="saveProduct">Избери</button>
+           <input v-model="quantities[index]" placeholder="Попълни ме" type="number">
+           <button v-on:click="saveProduct(quantities[index],burger.id)">Избери</button>
          </template>
-
        </b-table>
       <b-pagination
         v-model="currentPage"
@@ -73,6 +77,7 @@ export default {
       content: '',
       name: '',
       burgers: '',
+      quantities: [],
       added: {
         id: '',
         num: 0,
@@ -149,8 +154,6 @@ export default {
             error.toString()
         }
       )
-      quantities = null
-      this.added.quantity = ''
     }
   }
 }
