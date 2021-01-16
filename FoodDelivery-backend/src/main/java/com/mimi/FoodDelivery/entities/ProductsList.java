@@ -26,16 +26,20 @@ public class ProductsList {
     @Column(name="products_price")
     private BigDecimal productsPrice;
 
+    @Column(name="product_name")
+    private String productName;
+
     public ProductsList() {
     }
 
-    public ProductsList(Long id, Integer productTableId, Integer productId, Integer quantity,Integer customerId ,BigDecimal productsPrice) {
+    public ProductsList(Long id, Integer productTableId, Integer productId, Integer quantity,Integer customerId ,BigDecimal productsPrice,String productName) {
         this.id = id;
         this.productTableId = productTableId;
         this.productId = productId;
         this.quantity = quantity;
         this.productsPrice = productsPrice;
         this.customerId = customerId;
+        this.productName = productName;
     }
 
     public Long getId() { return id; }
@@ -61,4 +65,8 @@ public class ProductsList {
     public Integer getCustomerId() { return customerId; }
 
     public void setCustomerId(Integer customerId) { this.customerId = customerId; }
+
+    public String getProductName() { return productName; }
+
+    public void setProductName(String productName) { this.productName = productName; }
 }

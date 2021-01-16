@@ -56,6 +56,28 @@ class MenuService {
         quantity: form.quantity
       })
   }
+
+  getCart (customerId) {
+    return axios.get(API_URL + '/cart',
+      {
+        params:
+        {
+          customerId: customerId
+        }
+      })
+  }
+
+  getCartPage (customerId, currentPage, perPage) {
+    return axios.get(API_URL + '/cart/page',
+      {
+        params:
+          {
+            customerId: customerId,
+            currentPage: currentPage,
+            perPage: perPage
+          }
+      })
+  }
 }
 
 export default new MenuService()

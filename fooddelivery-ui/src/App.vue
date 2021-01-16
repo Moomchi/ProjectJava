@@ -10,6 +10,7 @@
       <router-link to="/dessert">Dessert</router-link> |
       <router-link to="/drink">Drink</router-link> |
       <router-link to="/sauce">Sauce</router-link> |
+      <router-link to="/cart">Вашата количка</router-link>
     </div>
     <router-view/>
   </div>

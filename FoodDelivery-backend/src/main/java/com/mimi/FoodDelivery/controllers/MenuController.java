@@ -145,6 +145,30 @@ public class MenuController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @GetMapping("/cart")
+    public ResponseEntity<?> getCart(@RequestParam Integer customerId){
+        List<?> chosenProducts = productListRepository.getListByCustomerId(customerId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("products",chosenProducts);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @GetMapping("/cart/page")
+    public ResponseEntity<?> getCartPage(@RequestParam(value ="currentPage", defaultValue = "1") int currentPage,
+                                         @RequestParam(value="perPage", defaultValue = "5") int perPage,
+                                         @RequestParam(required = false) Integer customerId){
+
+        Pageable pageable = PageRequest.of(currentPage-1,perPage);
+        Page<?> cart =productListRepository.findPageProductList(pageable,customerId);
+
+        Map<String, Object> responseCart = new HashMap<>();
+        responseCart.put("products",cart.getContent());
+        responseCart.put("currentPage", cart.getNumber()+1);
+        responseCart.put("totalItems",cart.getTotalElements());
+        responseCart.put("totalPages",cart.getTotalPages());
+        return new ResponseEntity<>(responseCart,HttpStatus.OK);
+    }
+
     @PostMapping("/orders/save")
     public ResponseEntity<?> saveOrder(@RequestParam(required = false) Long id,
                                        @RequestParam(required = false) String customerName,
@@ -194,14 +218,21 @@ public class MenuController {
         public ResponseEntity<?> saveProducts(@RequestBody ProductRequest productRequest){
 
             BigDecimal price=null;
+            String name= "";
             Long longProductId = Long.valueOf(productRequest.getProductId());
             switch (productRequest.getNum()){
-                case 0: price = burgerRepository.findPriceById(longProductId);break;
-                case 1: price = pizzaRepository.findPriceById(longProductId);break;
-                case 2: price = saladRepository.findPriceById(longProductId);break;
-                case 3: price = dessertRepository.findPriceById(longProductId);break;
-                case 4: price = drinkRepository.findPriceById(longProductId);break;
-                case 5: price = sauceRepository.findPriceById(longProductId);break;
+                case 0: price = burgerRepository.findPriceById(longProductId);
+                        name = burgerRepository.getBurgerName(longProductId);break;
+                case 1: price = pizzaRepository.findPriceById(longProductId);
+                        name = pizzaRepository.getPizzaName(longProductId); break;
+                case 2: price = saladRepository.findPriceById(longProductId);
+                        name = saladRepository.getSaladName(longProductId);break;
+                case 3: price = dessertRepository.findPriceById(longProductId);
+                        name = dessertRepository.getDessertName(longProductId);break;
+                case 4: price = drinkRepository.findPriceById(longProductId);
+                        name = drinkRepository.getDrinkName(longProductId);break;
+                case 5: price = sauceRepository.findPriceById(longProductId);
+                        name = sauceRepository.getSauceName(longProductId);break;
             }
             price = BigDecimal.valueOf(productRequest.getQuantity()).multiply(price);
             ProductsList productsList = new ProductsList(
@@ -210,7 +241,8 @@ public class MenuController {
                     productRequest.getProductId(),
                     productRequest.getQuantity(),
                     productRequest.getCustomerId(),
-                    price);
+                    price,
+                    name);
             productsList = productListRepository.save(productsList);
 
             Map<String,Object> response = new HashMap<>();
