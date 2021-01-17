@@ -69,7 +69,7 @@ export default {
       quantities: [],
       added: {
         id: '',
-        num: 4,
+        num: 3,
         productId: '',
         quantity: '',
         customerId: 5

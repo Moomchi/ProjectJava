@@ -22,6 +22,7 @@
            </td>
          </template>
        </b-table>
+      <h3>Total items: {{this.rows}}</h3>
       <template>
         <v-container class="grid-list-xl">
           <td v-for="(burger,index) in burgers" :key="burger.id">
@@ -32,7 +33,7 @@
                 <p class="card-text">
                   {{burger.price}} лв.
                 </p>
-                <input v-model="quantities[index]" placeholder="Попълни ме" type="number">
+                <input v-model="quantities[index]" type="number">
                 <div slot="chosen">
                   <b-button variant="secondary" v-on:click="saveProduct(quantities[index],burger.id)">Добави</b-button>
                 </div>
@@ -48,7 +49,6 @@
         @input="getProductsPage"
         aria-controls="burgerTable"
       ></b-pagination>
-      <h3>Total items: {{this.rows}}</h3>
 
     </header>
   </div>

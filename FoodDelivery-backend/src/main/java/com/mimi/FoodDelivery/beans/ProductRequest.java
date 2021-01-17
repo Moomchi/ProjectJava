@@ -6,7 +6,7 @@ public class ProductRequest {
     Integer num;
     Integer productId;
     Integer quantity;
-    String productName;
+    String name;
 
     public Long getId() {
         return id;
@@ -48,7 +48,11 @@ public class ProductRequest {
         this.quantity = quantity;
     }
 
-    public String getProductName() { return productName; }
+    public String getName() {
+        return name;
+    }
 
-    public void setProductName(String productName) { this.productName = productName; }
+    public void setName(String name) {
+        this.name = name;
+    }
 }

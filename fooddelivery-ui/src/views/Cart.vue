@@ -10,13 +10,13 @@
         <template>
           <div>
             <b-alert
-              variant="danger"
+              variant="success"
               dismissible
               fade
               :show="showDismissibleAlert"
               @dismissed="showDismissibleAlert=false"
             >
-              {{ 'Вашият код за проверка на поръчка е:' + this.id }}
+              {{ 'Поръчката Ви бе записана! Вашият код за проверка е:' + this.id }}
             </b-alert>
           </div>
         </template>
@@ -141,7 +141,7 @@ export default {
       this.added.customerName = name
       MenuService.saveOrder(this.added).then(
         response => {
-          this.id = response.data.id
+          this.id = response.data.Order.id
           console.log(this.id)
         },
         error => {
