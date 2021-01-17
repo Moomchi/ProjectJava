@@ -1,24 +1,22 @@
 <template>
   <div id="app">
     <div id="nav">
-      <b-navbar-brand>
-        <img src="./assets/logo1.jpg" align="left" a height="100" width="150"
-             style="margin:-60px -40px"
-      /></b-navbar-brand>
-
+      <b-navbar-brand style="align-content: flex-start;
+      font-family: 'Times New Roman';
+      font-weight: Bold;
+      font-size: xx-large
+      ">МИМИ Фуудс©</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <router-link to="/">Home</router-link>
-          <router-link to="/about">About</router-link>
-          <router-link to="/deals">Deals</router-link>
-          <router-link to="/burger">BURGER</router-link>
-          <router-link to="/pizza">PIZZA</router-link>
-          <router-link to="/salad">SALAD</router-link>
-          <router-link to="/dessert">DESSERT</router-link>
-          <router-link to="/drink">DRINK</router-link>
-          <router-link to="/sauce">SAUCE</router-link>
+          <router-link to="/">НАЧАЛО</router-link>
+          <router-link to="/burger">БУРГЕР</router-link>
+          <router-link to="/pizza">ПИЦА</router-link>
+          <router-link to="/salad">САЛАТА</router-link>
+          <router-link to="/dessert">ДЕСЕРТ</router-link>
+          <router-link to="/drink">НАПИТКА</router-link>
+          <router-link to="/sauce">СОС</router-link>
           <router-link to="/cart"><img src="./assets/cart.png" height="37" width="40" align="rightUp" border="grooved"/></router-link>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
@@ -37,13 +35,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: blue;
 }
 
 #nav {
   padding: 50px;
-  color: coral;
-  background-color: #1b95e0;
+  color: black;
+  text-align: center;
+  background-color: whitesmoke;
 }
 
 #nav a {
@@ -51,12 +50,13 @@
   margin: 10px;
   font-weight: bold;
   border-style: groove;
-  border-color: crimson;
-  background-color: crimson;
+  border-color: darkslategray;
+  background-color: darkslategray;
   color: black;
 }
 
 #nav a.router-link-exact-active {
-  color:blue;
+  background-color: coral;
+  color:white;
 }
 </style>

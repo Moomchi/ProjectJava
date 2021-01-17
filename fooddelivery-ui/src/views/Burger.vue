@@ -34,7 +34,7 @@
                 </p>
                 <input v-model="quantities[index]" placeholder="Попълни ме" type="number">
                 <div slot="chosen">
-                  <button v-on:click="saveProduct(quantities[index],burger.id)">Добави</button>
+                  <b-button variant="secondary" v-on:click="saveProduct(quantities[index],burger.id)">Добави</b-button>
                 </div>
               </div>
             </div>
