@@ -75,7 +75,7 @@ export default {
         customerId: 5
       },
       fields: [
-        { key: 'pizzaName', label: 'Име' }
+        { key: 'pizzaName', label: 'Търси по име:' }
       ],
       currentPage: '',
       perPage: 5,

@@ -75,7 +75,7 @@ export default {
         customerId: 5
       },
       fields: [
-        { key: 'saladName', label: 'Име' }
+        { key: 'saladName', label: 'Търси по име:' }
       ],
       currentPage: '',
       perPage: 5,

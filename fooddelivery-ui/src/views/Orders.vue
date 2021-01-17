@@ -49,7 +49,7 @@ export default {
       customerId: '',
       products: '',
       fields: [
-        { key: 'id', label: '' },
+        { key: 'id', label: 'Търси по номер:' },
         { key: 'customerName', label: 'Име:' },
         { key: 'orderList', label: 'Поръчка:' },
         { key: 'totalPrice', label: 'Цена:' },
