@@ -88,6 +88,27 @@ class MenuService {
           }
       })
   }
+
+  getOrderPage (customerId, currentPage, perPage) {
+    return axios.get(API_URL + '/orders/page',
+      {
+        params:
+          {
+            customerId: customerId,
+            currentPage: currentPage,
+            perPage: perPage
+          }
+      })
+  }
+
+  saveOrder (form) {
+    return axios.post(API_URL + '/orders/save',
+      {
+        id: form.id,
+        customerName: form.customerName,
+        customerId: form.customerId
+      })
+  }
 }
 
 export default new MenuService()

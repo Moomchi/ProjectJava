@@ -1,6 +1,7 @@
 package com.mimi.FoodDelivery.controllers;
 
 
+import com.mimi.FoodDelivery.beans.OrderRequest;
 import com.mimi.FoodDelivery.beans.ProductRequest;
 import com.mimi.FoodDelivery.entities.*;
 import com.mimi.FoodDelivery.repositories.*;
@@ -169,10 +170,25 @@ public class MenuController {
         return new ResponseEntity<>(responseCart,HttpStatus.OK);
     }
 
+    @GetMapping("/orders/page")
+    public ResponseEntity<?> getOrderPage(@RequestParam(value ="currentPage", defaultValue = "1") int currentPage,
+                                         @RequestParam(value="perPage", defaultValue = "5") int perPage,
+                                         @RequestParam(required = false) Long customerId) {
+
+        Pageable pageable = PageRequest.of(currentPage - 1, perPage);
+        Page<?> cart = ordersRepository.findOrderPage(pageable,customerId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("products", cart.getContent());
+        response.put("currentPage", cart.getNumber() + 1);
+        response.put("totalItems", cart.getTotalElements());
+        response.put("totalPages", cart.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
     @PostMapping("/orders/save")
-    public ResponseEntity<?> saveOrder(@RequestParam(required = false) Long id,
-                                       @RequestParam(required = false) String customerName,
-                                       @RequestParam(required = false) Integer customerId) {
+    public ResponseEntity<?> saveOrder(@RequestBody OrderRequest orderRequest) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         String currentDate=formatter.format(date);
@@ -182,7 +198,7 @@ public class MenuController {
 
         Boolean received = false;
 
-        ArrayList<ProductsList> productList = productListRepository.getListByCustomerId(customerId);
+        ArrayList<ProductsList> productList = productListRepository.getListByCustomerId(orderRequest.getCustomerId());
 
         for (ProductsList productsList : productList) {
             String productName = "";
@@ -204,9 +220,9 @@ public class MenuController {
         }
 
 
-        Orders currentOrder = new Orders(id,received, orderList.toString(),customerName,currentDate,totalPrice);
+        Orders currentOrder = new Orders(orderRequest.getId(),received, orderList.toString(),orderRequest.getCustomerName(),currentDate,totalPrice);
         currentOrder = ordersRepository.save(currentOrder);
-        productListRepository.deleteProductList(customerId);
+        productListRepository.deleteProductList(orderRequest.getCustomerId());
 
         Map<String,Object> response = new HashMap<>();
         response.put("Order", currentOrder);

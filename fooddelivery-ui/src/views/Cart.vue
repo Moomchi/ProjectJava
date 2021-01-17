@@ -2,6 +2,25 @@
     <div>
       <header class="jumbotron">
         <h3>Вашата количка</h3>
+        <template>
+          <label>Въведете име:
+            <input v-model="name">
+          </label>
+        </template>
+        <template>
+          <div>
+            <b-alert
+              variant="danger"
+              dismissible
+              fade
+              :show="showDismissibleAlert"
+              @dismissed="showDismissibleAlert=false"
+            >
+              {{ 'Вашият код за проверка на поръчка е:' + this.id }}
+            </b-alert>
+          </div>
+        </template>
+        <b-button variant="secondary" v-on:click="saveOrder(name);showDismissibleAlert=true" type="button">Направи поръчка</b-button>
         <b-table
           id="productList"
           striped
@@ -13,12 +32,12 @@
           :current-page="currentPage"
           :per-page="0"
         >
+
           <template v-slot:cell(choose)="{ item }">
             <b-button variant="secondary" v-on:click="deleteProductFromCart(item.id)" type="button">Изтрий</b-button>
           </template>
         </b-table>
-        <!--<b-button variant="secondary" v-on:click="deleteProductFromCart(item.id)">Запази</b-button>
-        -->
+
         <b-pagination
           v-model="currentPage"
           :total-rows="rows"
@@ -37,6 +56,7 @@ export default {
   name: 'Cart',
   data () {
     return {
+      showDismissibleAlert: false,
       message: '',
       content: '',
       name: '',
@@ -49,6 +69,11 @@ export default {
         { key: 'productsPrice', label: 'Цена' },
         { key: 'choose', label: '' }
       ],
+      added: {
+        id: '',
+        customerName: '',
+        customerId: 5
+      },
       currentPage: '',
       perPage: 5,
       rows: ''
@@ -111,6 +136,20 @@ export default {
             error.toString()
         }
       )
+    },
+    saveOrder (name) {
+      this.added.customerName = name
+      MenuService.saveOrder(this.added).then(
+        response => {
+          this.id = response.data.id
+          console.log(this.id)
+        },
+        error => {
+          this.content =
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString()
+        })
     }
   }
 }

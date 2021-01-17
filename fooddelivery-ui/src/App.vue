@@ -19,9 +19,10 @@
           <router-link to="/dessert">DESSERT</router-link>
           <router-link to="/drink">DRINK</router-link>
           <router-link to="/sauce">SAUCE</router-link>
+          <router-link to="/cart"><img src="./assets/cart.png" height="37" width="40" align="rightUp" border="grooved"/></router-link>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
-          <router-link to="/cart"><img src="./assets/cart.png" height="37" width="40" align="rightUp" border="grooved"/></router-link>
+          <router-link to="/orders">Моите поръчки</router-link>
         </b-navbar-nav>
           <router-view/>
       </b-collapse>

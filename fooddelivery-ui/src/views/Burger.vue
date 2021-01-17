@@ -11,13 +11,12 @@
        :current-page="currentPage"
        :per-page="0"
        >
-         <template slot="top-row" slot-scope="{ fields }">
+         <template slot="top-row" slot-scope="{ fields }" style="padding: 50px">
            <td v-for="(field, index) in fields" :key="field.id">
              <div v-if="index !== 0">
              </div>
              <div v-else>
                <input v-model="name" :placeholder="field.label">
-               <div></div>
                <b-button variant="secondary" v-on:click="getProductsPage">Търси</b-button>
              </div>
            </td>
@@ -75,7 +74,7 @@ export default {
         customerId: 5
       },
       fields: [
-        { key: 'burgerName', label: 'Име' }
+        { key: 'burgerName', label: 'Търси по име:' }
       ],
       currentPage: '',
       perPage: 5,

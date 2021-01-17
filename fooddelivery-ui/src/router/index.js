@@ -9,6 +9,7 @@ import Dessert from '../views/Dessert'
 import Drink from '../views/Drink'
 import Sauce from '../views/Sauce'
 import Cart from '../views/Cart'
+import Orders from '../views/Orders'
 
 Vue.use(VueRouter)
 
@@ -57,6 +58,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart
+  },
+  {
+    path: '/orders',
+    name: 'Orders',
+    component: Orders
   },
   {
     path: '/about',
