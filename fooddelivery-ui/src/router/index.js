@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Deals from '../views/Deals.vue'
 import Burger from '../views/Burger'
 import Pizza from '../views/Pizza'
 import Salad from '../views/Salad'
@@ -18,11 +17,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/deals',
-    name: 'Deals',
-    component: Deals
   },
   {
     path: '/burger',

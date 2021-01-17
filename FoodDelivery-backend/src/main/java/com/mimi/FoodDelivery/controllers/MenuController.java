@@ -6,14 +6,12 @@ import com.mimi.FoodDelivery.beans.ProductRequest;
 import com.mimi.FoodDelivery.entities.*;
 import com.mimi.FoodDelivery.repositories.*;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,14 +22,11 @@ import java.util.*;
 public class MenuController {
 
     private final BurgerRepository burgerRepository;
-    private CityRepository cityRepository;
-    private final DealsRepository dealsRepository;
     private final DessertRepository dessertRepository;
     private final DrinkRepository drinkRepository;
     private final PizzaRepository pizzaRepository;
     private final SaladRepository saladRepository;
     private final SauceRepository sauceRepository;
-    private DistrictRepository districtRepository;
     private final OrdersRepository ordersRepository;
     private final ProductListRepository productListRepository;
 
@@ -42,7 +37,6 @@ public class MenuController {
                    SaladRepository saladRepository,
                    SauceRepository sauceRepository,
                    OrdersRepository ordersRepository,
-                   DealsRepository dealsRepository,
                    ProductListRepository productListRepository) {
         this.burgerRepository= burgerRepository;
         this.pizzaRepository = pizzaRepository;
@@ -51,13 +45,7 @@ public class MenuController {
         this.saladRepository = saladRepository;
         this.sauceRepository = sauceRepository;
         this.ordersRepository = ordersRepository;
-        this.dealsRepository = dealsRepository;
         this.productListRepository = productListRepository;
-    }
-
-    @GetMapping("/all/deals")
-    public List<Deals> getAllDeals() {
-        return new ArrayList<>(dealsRepository.findAll());
     }
 
     @GetMapping("/all")
