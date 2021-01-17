@@ -26,8 +26,9 @@
       <template>
         <v-container class="grid-list-xl">
           <td v-for="(burger,index) in burgers" :key="burger.id">
-            <div class="card text-white bg-dark col-lg-4" style="max-width: 15rem;">
+            <div class="card text-white bg-dark col-lg-4" style="max-width: 15rem;margin: 4px">
               <div class="card-header">{{burger.burgerName}}</div>
+              <img src="../assets/burger.png" height="200" width="200" />
               <div class="card-body">
                 <p class="card-text">
                   {{burger.price}} лв.

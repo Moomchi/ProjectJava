@@ -17,7 +17,8 @@
             <b-button variant="secondary" v-on:click="deleteProductFromCart(item.id)" type="button">Изтрий</b-button>
           </template>
         </b-table>
-        <b-button variant="secondary" v-on:click="deleteProductFromCart(item.id)">Запази</b-button>
+        <!--<b-button variant="secondary" v-on:click="deleteProductFromCart(item.id)">Запази</b-button>
+        -->
         <b-pagination
           v-model="currentPage"
           :total-rows="rows"
